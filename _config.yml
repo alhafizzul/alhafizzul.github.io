@@ -13,43 +13,40 @@ baseurl: ''
 lang: en
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Asia/Ho_Chi_Minh
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Chirpy                          # the main title
+title: Elvis                                             # the main title
 
-tagline: A text-focused Jekyll theme   # it will display as the sub-title
+tagline: Reverse Engineer?                                      # it will display as the sub-title
 
-description: >-                        # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
+description: >-                                                 # used by seo meta and the atom feed
+  A blog I can post random stuff about computer security.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://elvisblue.github.io'
 
 github:
-  username: Elvis Blue             # change to your github username
+  username: ElvisBlue                                           # change to your github username
 
 twitter:
-  username: Phuong Dang            # change to your twitter username
+  username: DangDinhPhuong3                                     # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Elvis Blue
-  email: elvisblue@localhost             # change to your email address
+  name: Elvis
+  #email: elvisblue@localhost                                   # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/DangDinhPhuong3      # change to your twitter homepage
-    - https://github.com/ElvisBlue       # change to your github homepage
+    - https://github.com/ElvisBlue                              # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
 
-google_site_verification: google_meta_tag_verification # change to your verification string
+google_site_verification: google_meta_tag_verification          # change to your verification string
 
 # ↑ --------------------------
 
@@ -72,7 +69,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode:   # [light|dark]
+theme_mode: #[light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -82,7 +79,7 @@ theme_mode:   # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: "/commons/avatar.jpg"
 
 # boolean type, the global switch for ToC in posts.
 toc: true
