@@ -85,7 +85,7 @@ Here is a sample of add handler (code perform instruction `add`)
 
 ## Analyze the VM
 
-If the password length is 16, it will be copied to vm memory at offset 0x210000 then run the vm. To analyze the vm, we need to dump the vm memory (which include all necessary data such as password, vm data and vm code) then write a disassembler to analyze it. To dump the vm memory, just debugging it and dump the memory before it execute any vm instruction. You can find my dump [here](/commons/2023-06-17-hvm-solution/VM_Mem.bin. There are many options to write a dissembler such as using C, python,… but in this case I wrote a small IDA processor to dissamble the vm code.
+If the password length is 16, it will be copied to vm memory at offset 0x210000 then run the vm. To analyze the vm, we need to dump the vm memory (which include all necessary data such as password, vm data and vm code) then write a disassembler to analyze it. To dump the vm memory, just debugging it and dump the memory before it execute any vm instruction. You can find my dump [here](/commons/2023-06-17-hvm-solution/VM_Mem.bin). There are many options to write a dissembler such as using C, python,… but in this case I wrote a small IDA processor to dissamble the vm code.
 
 
 ```python
