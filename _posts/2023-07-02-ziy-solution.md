@@ -452,7 +452,7 @@ def move_to_input(from_x, from_y, to_x, to_y):
     result += chr(to_y + 0x69)
     return result
 ```
-By printing chess board and keep updating my moves to memory through debugger, I am finally able to play chess with AI. I know this is inconvenient but I works .
+By printing chess board and keep updating my moves to memory through debugger, I am finally able to play chess with AI. I know this is inconvenient but It works .
 
 ### Help from stockfish
 Second problem can be solved by using stockfish. For anyone who doesn't know stockfish is the best open source chess AI until now. 
