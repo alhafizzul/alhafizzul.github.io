@@ -20,7 +20,7 @@ timezone: Asia/Ho_Chi_Minh
 
 title: Elvis                                             # the main title
 
-tagline: Reverse Engineer?                                      # it will display as the sub-title
+tagline: A reverse engineer?                                    # it will display as the sub-title
 
 description: >-                                                 # used by seo meta and the atom feed
   A blog I can post random stuff about computer security.
