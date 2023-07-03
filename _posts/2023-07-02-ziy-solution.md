@@ -7,7 +7,7 @@ image:
   path: /commons/2023-07-02-ziy-solution/chess.jpg
 ---
 
-How to find a good crackme on crackmes.one? The answer is simple: good crackme usually created by skill reverser. [ziy](https://crackmes.one/crackme/614a589733c5d4649c52bbad) for example. I downloaded it 1 year ago but still have no time to try it until now. It takes me about 1 week to solve this crackme.
+How to find a good crackme on crackmes.one? The answer is simple: good crackme usually created by skill reverser. [ziy](https://crackmes.one/crackme/614a589733c5d4649c52bbad) for example. I downloaded it 1 year ago but still have no time to try it until now. It takes me about 1 week to solve this.
 
 ## Challenge overview
 An ELF file which ask user to input 60 characters password. No obfuscation, no anti-debug or anti-disassembler trick but the code is quiet large.
@@ -469,60 +469,6 @@ PAWN = 17
 BISHOP = 29
 ROOK = 59
 QUEEN = 83
-    
-def data_to_FENs(data):
-    fens = ""
-    for i in range(0, 8):
-        empty = 0
-        line = ""
-        for j in range(0, 8):
-            c = ctypes.c_long(data[i * 8 + j]).value
-            if c == 0:
-                empty += 1
-            else:
-                if c in [KNIGHT, -KNIGHT]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["N", "n"][[KNIGHT, -KNIGHT].index(c)]
-                elif c in [KING, -KING]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["K", "k"][[KING, -KING].index(c)]
-                elif c in [PAWN, -PAWN]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["P", "p"][[PAWN, -PAWN].index(c)]
-                elif c in [BISHOP, -BISHOP]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["B", "b"][[BISHOP, -BISHOP].index(c)]
-                elif c in [ROOK, -ROOK]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["R", "r"][[ROOK, -ROOK].index(c)]
-                elif c in [QUEEN, -QUEEN]:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += ["Q", "q"][[QUEEN, -QUEEN].index(c)]
-                elif c != 0:
-                    if empty > 0:
-                        line += str(empty)
-                        empty = 0
-                    line += "?"
-                    print(c)
-        if empty > 0:
-            line += str(empty)
-        line += "/"
-        fens = line + fens
-        #fens += line
-            
-    return fens[:-1]
 
 def move_to_input(from_x, from_y, to_x, to_y):
     result = ""
@@ -565,7 +511,7 @@ if __name__ == "__main__":
 The correct password is `tjtotoqlqlolnisnrospunsoslrktktlrksjpiuiuiririrlrnsoumululrl`
 
 ## Conclusion
-1. I was born in a city where people mostly play [chinese chess](https://en.wikipedia.org/wiki/Xiangqi) instead of chess. I have never played chess before until I started solving this crackme. I have spent whole day to learn how to play chess.
+1. I was born in a city where people mostly play [chinese chess](https://en.wikipedia.org/wiki/Xiangqi) instead of chess. I have never played chess before until I started solving this crackme.
 2. Did I solve this crackme by myself? To be honest I am not. I was stuck for a day because stockfish could not find the solution. Then I pm s4r to ask for hint and he said my parsed chess board is inverted. He also give me a nice [link](https://lichess.org/editor) to play with stockfish. After correct the chess board, stockfish was able to checkmate in 3 moves. Here is my first parsed board (match 1).
 ![Inverted board](/commons/2023-07-02-ziy-solution/img7.PNG)
 _Inverted board_
