@@ -2,7 +2,7 @@
 title: NahamCon CTF 2023 - Mayhem
 date: 2023-06-17 09:19:00 +0700
 categories: [Writeup, Reverse Engineering]
-tags: [ctf, reverse engineering, malware]
+tags: [ctf, reverse engineering, malware, DFIR]
 ---
 
 Last weekend I spent my free time to play NahamCon CTF with idek team. We managed to get 3rd place and first blood on Mayhem challenge. Here is a quick write up for the challenge.
