@@ -87,375 +87,378 @@ Here is a sample of add handler (code perform instruction `add`)
 
 If the password length is 16, it will be copied to vm memory at offset 0x210000 then run the vm. To analyze the vm, we need to dump the vm memory (which include all necessary data such as password, vm data and vm code) then write a disassembler to analyze it. To dump the vm memory, just debugging it and dump the memory before it execute any vm instruction. You can find my dump [here](/commons/2023-06-17-hvm-solution/VM_Mem.bin). There are many options to write a dissembler such as using C, python,… but in this case I wrote a small IDA processor to dissamble the vm code.
 
-
+<details>
+<summary><b>Click here to expand IDA Processor</b></summary>
+<div markdown="1">
 ```python
 from idc import *
 from idautils import *
 from idaapi import *
 
 class hvm_processor_t(processor_t):
-    id = 0x8000 + 1212
-    flag = PR_ASSEMBLE | PRN_HEX 
-    cnbits = 8
-    dnbits = 32
-    psnames = ["hvm"]
-    plnames = ["HVM Processor"]
-    segreg_size = 0
-    instruc_start = 0
-    
-    assembler = {
-        "header": [".hvm"],
-        "flag": AS_NCHRE | ASH_HEXF0 | ASD_DECF0 | ASO_OCTF0 | ASB_BINF0,
-        "uflag": 0,
-        "name": "hvm assembler",
-        "origin": ".org",
-        "end": ".end",
-        "cmnt": ";",
-        "ascsep": "'",
-        "accsep": "'",
-        "esccodes": "\"'",
-        "a_ascii": ".ascii",
-        "a_byte": ".byte",
-        "a_word": ".word",
-        "a_dword": ".dword",
-        "a_bss": "dfs %s",
-        "a_seg": "seg",
-        "a_curip": "PC",
-        "a_public": "",
-        "a_weak": "",
-        "a_extrn": ".extern",
-        "a_comdef": "",
-        "a_align": ".align",
-        "lbrace": "(",
-        "rbrace": ")",
-        "a_mod": "%",
-        "a_band": "&",
-        "a_bor": "|",
-        "a_xor": "^",
-        "a_bnot": "~",
-        "a_shl": "<<",
-        "a_shr": ">>",
-        "a_sizeof_fmt": "size %s",
-    }
-    
-    
-    # size of a segment register in bytes
-    segreg_size = 0
-    
-    reg_names = [
-      'r0',
-      'r1',
-      'r2',
-      'r3',
-      'r4',
-      'r5',
-      'r6',
-      'sp',
-    ]
-    
-    # Array of instructions
-    instruc = [
-        {'name': 'jmp',     'feature':CF_JUMP | CF_USE1,        'cmt': "Unconditional jump"},
-        {'name': 'je',      'feature':CF_JUMP | CF_USE1,        'cmt': "Jump if flag set to 1"},
-        {'name': 'add',     'feature':CF_USE1 | CF_USE2,        'cmt': "Add"},
-        {'name': 'exit',    'feature':CF_STOP,                  'cmt': "Exit program"},
-        {'name': 'sub',     'feature':CF_USE1 | CF_USE2,        'cmt': "Sub"},
-        {'name': 'mov',     'feature':CF_USE1 | CF_USE2,        'cmt': "Mov"},
-        {'name': 'not',     'feature':CF_USE1,                  'cmt': "Not"},
-        {'name': 'xor',     'feature':CF_USE1 | CF_USE2,        'cmt': "Xor"},
-        {'name': 'shl',     'feature':CF_USE1 | CF_USE2,        'cmt': "Shl"},
-        {'name': 'mod',     'feature':CF_USE1 | CF_USE2,        'cmt': "Mod"},
-        {'name': 'and',     'feature':CF_USE1 | CF_USE2,        'cmt': "And"},
-        {'name': 'or',      'feature':CF_USE1 | CF_USE2,        'cmt': "Or"},
-        {'name': 'call',    'feature':CF_CALL | CF_USE1,        'cmt': "Call"},
-        {'name': 'ret',     'feature':CF_STOP,                  'cmt': "Ret"},
-        {'name': 'shr',     'feature':CF_USE1 | CF_USE2,        'cmt': "Shr"},
-        {'name': 'cmp',     'feature':CF_USE1 | CF_USE2,        'cmt': "Cmp"},
-        #{'name': 'mov',     'feature':0,                       'cmt': "Get memory"},
-        {'name': 'pop',     'feature':CF_USE1,                  'cmt': "Pop"},
-        #{'name': 'mov',     'feature':0,                       'cmt': "Set memory"},
-        {'name': 'push',    'feature':CF_USE1,                  'cmt': "Push register"},
-        {'name': 'jne',     'feature':CF_JUMP | CF_USE1,        'cmt': "Jump if flag set to 0"},
-    ]
-    
-    instruc_idx = {
-        'jmp'   :   0, 
-        'je'    :   1, 
-        'add'   :   2,
-        'exit'  :   3, 
-        'sub'   :   4, 
-        'mov'   :   5,
-        'not'   :   6,
-        'xor'   :   7, 
-        'shl'   :   8,
-        'mod'   :   9,
-        'and'   :   10,
-        'or'    :   11,
-        'call'  :   12,
-        'ret'   :   13,
-        'shr'   :   14,
-        'cmp'   :   15,
-        'pop'   :   16,
-        'push'  :   17,
-        'jne'   :   18,
-    }
-    
-    # icode of the first instruction
-    instruc_start = 0
+	id = 0x8000 + 1212
+	flag = PR_ASSEMBLE | PRN_HEX 
+	cnbits = 8
+	dnbits = 32
+	psnames = ["hvm"]
+	plnames = ["HVM Processor"]
+	segreg_size = 0
+	instruc_start = 0
+	
+	assembler = {
+		"header": [".hvm"],
+		"flag": AS_NCHRE | ASH_HEXF0 | ASD_DECF0 | ASO_OCTF0 | ASB_BINF0,
+		"uflag": 0,
+		"name": "hvm assembler",
+		"origin": ".org",
+		"end": ".end",
+		"cmnt": ";",
+		"ascsep": "'",
+		"accsep": "'",
+		"esccodes": "\"'",
+		"a_ascii": ".ascii",
+		"a_byte": ".byte",
+		"a_word": ".word",
+		"a_dword": ".dword",
+		"a_bss": "dfs %s",
+		"a_seg": "seg",
+		"a_curip": "PC",
+		"a_public": "",
+		"a_weak": "",
+		"a_extrn": ".extern",
+		"a_comdef": "",
+		"a_align": ".align",
+		"lbrace": "(",
+		"rbrace": ")",
+		"a_mod": "%",
+		"a_band": "&",
+		"a_bor": "|",
+		"a_xor": "^",
+		"a_bnot": "~",
+		"a_shl": "<<",
+		"a_shr": ">>",
+		"a_sizeof_fmt": "size %s",
+	}
+	
+	
+	# size of a segment register in bytes
+	segreg_size = 0
+	
+	reg_names = [
+	  'r0',
+	  'r1',
+	  'r2',
+	  'r3',
+	  'r4',
+	  'r5',
+	  'r6',
+	  'sp',
+	]
+	
+	# Array of instructions
+	instruc = [
+		{'name': 'jmp',     'feature':CF_JUMP | CF_USE1,        'cmt': "Unconditional jump"},
+		{'name': 'je',      'feature':CF_JUMP | CF_USE1,        'cmt': "Jump if flag set to 1"},
+		{'name': 'add',     'feature':CF_USE1 | CF_USE2,        'cmt': "Add"},
+		{'name': 'exit',    'feature':CF_STOP,                  'cmt': "Exit program"},
+		{'name': 'sub',     'feature':CF_USE1 | CF_USE2,        'cmt': "Sub"},
+		{'name': 'mov',     'feature':CF_USE1 | CF_USE2,        'cmt': "Mov"},
+		{'name': 'not',     'feature':CF_USE1,                  'cmt': "Not"},
+		{'name': 'xor',     'feature':CF_USE1 | CF_USE2,        'cmt': "Xor"},
+		{'name': 'shl',     'feature':CF_USE1 | CF_USE2,        'cmt': "Shl"},
+		{'name': 'mod',     'feature':CF_USE1 | CF_USE2,        'cmt': "Mod"},
+		{'name': 'and',     'feature':CF_USE1 | CF_USE2,        'cmt': "And"},
+		{'name': 'or',      'feature':CF_USE1 | CF_USE2,        'cmt': "Or"},
+		{'name': 'call',    'feature':CF_CALL | CF_USE1,        'cmt': "Call"},
+		{'name': 'ret',     'feature':CF_STOP,                  'cmt': "Ret"},
+		{'name': 'shr',     'feature':CF_USE1 | CF_USE2,        'cmt': "Shr"},
+		{'name': 'cmp',     'feature':CF_USE1 | CF_USE2,        'cmt': "Cmp"},
+		#{'name': 'mov',     'feature':0,                       'cmt': "Get memory"},
+		{'name': 'pop',     'feature':CF_USE1,                  'cmt': "Pop"},
+		#{'name': 'mov',     'feature':0,                       'cmt': "Set memory"},
+		{'name': 'push',    'feature':CF_USE1,                  'cmt': "Push register"},
+		{'name': 'jne',     'feature':CF_JUMP | CF_USE1,        'cmt': "Jump if flag set to 0"},
+	]
+	
+	instruc_idx = {
+		'jmp'   :   0, 
+		'je'    :   1, 
+		'add'   :   2,
+		'exit'  :   3, 
+		'sub'   :   4, 
+		'mov'   :   5,
+		'not'   :   6,
+		'xor'   :   7, 
+		'shl'   :   8,
+		'mod'   :   9,
+		'and'   :   10,
+		'or'    :   11,
+		'call'  :   12,
+		'ret'   :   13,
+		'shr'   :   14,
+		'cmp'   :   15,
+		'pop'   :   16,
+		'push'  :   17,
+		'jne'   :   18,
+	}
+	
+	# icode of the first instruction
+	instruc_start = 0
 
-    # icode of the last instruction + 1
-    instruc_end = len(instruc) + 1
-    
-    # Segment register information (use virtual CS and DS registers if your
-    # processor doesn't have segment registers):
-    reg_first_sreg = 0 # index of CS
-    reg_last_sreg = 0 # index of DS
+	# icode of the last instruction + 1
+	instruc_end = len(instruc) + 1
+	
+	# Segment register information (use virtual CS and DS registers if your
+	# processor doesn't have segment registers):
+	reg_first_sreg = 0 # index of CS
+	reg_last_sreg = 0 # index of DS
 
-    # You should define 2 virtual segment registers for CS and DS.
-    # number of CS/DS registers
-    reg_code_sreg = -1
-    reg_data_sreg = -1
-        
-        
-    
-    def get_reg(self, op):
-        return (op >> 5) & 7
-        
-    def get_value(self, ea, op_cmd):
-        if (get_wide_byte(ea + 1) & 1 != 0):
-            op_cmd.type = o_imm
-            op_cmd.value = get_wide_dword(ea + 2)
-            op_cmd.addr = get_wide_dword(ea + 2)
-        else:
-            op_cmd.type = o_reg
-            op_cmd.reg = (get_wide_byte(ea + 1) >> 2) & 7
-        return True
-        
-    def get_mem(self, ea, op_cmd):
-        if (get_wide_byte(ea + 1) & 1 != 0):
-            op_cmd.type = o_phrase #address memory
-            op_cmd.value = get_wide_dword(ea + 2)
-            op_cmd.addr = get_wide_dword(ea + 2)
-        else:
-            op_cmd.type = o_displ #reg memory
-            op_cmd.reg = (get_wide_byte(ea + 1) >> 2) & 7
-        return True
-        
+	# You should define 2 virtual segment registers for CS and DS.
+	# number of CS/DS registers
+	reg_code_sreg = -1
+	reg_data_sreg = -1
+		
+		
+	
+	def get_reg(self, op):
+		return (op >> 5) & 7
+		
+	def get_value(self, ea, op_cmd):
+		if (get_wide_byte(ea + 1) & 1 != 0):
+			op_cmd.type = o_imm
+			op_cmd.value = get_wide_dword(ea + 2)
+			op_cmd.addr = get_wide_dword(ea + 2)
+		else:
+			op_cmd.type = o_reg
+			op_cmd.reg = (get_wide_byte(ea + 1) >> 2) & 7
+		return True
+		
+	def get_mem(self, ea, op_cmd):
+		if (get_wide_byte(ea + 1) & 1 != 0):
+			op_cmd.type = o_phrase #address memory
+			op_cmd.value = get_wide_dword(ea + 2)
+			op_cmd.addr = get_wide_dword(ea + 2)
+		else:
+			op_cmd.type = o_displ #reg memory
+			op_cmd.reg = (get_wide_byte(ea + 1) >> 2) & 7
+		return True
+		
 
-    def get_instruction_itype(self, name):
-        ret = self.instruc_idx.get(name) 
-        if ret is not None:
-            return ret
-        else:
-            print("Could not find instruction %s" % name)
-            return -1
+	def get_instruction_itype(self, name):
+		ret = self.instruc_idx.get(name) 
+		if ret is not None:
+			return ret
+		else:
+			print("Could not find instruction %s" % name)
+			return -1
 
-    def get_instruction_name(self, itype):
-        for i, ins in enumerate(self.instruc):
-            if i == itype:
-                return ins['name']
-                    
-    def notify_func_bounds(self, code, func_ea, max_func_end_ea):
-        return FIND_FUNC_OK
+	def get_instruction_name(self, itype):
+		for i, ins in enumerate(self.instruc):
+			if i == itype:
+				return ins['name']
+					
+	def notify_func_bounds(self, code, func_ea, max_func_end_ea):
+		return FIND_FUNC_OK
 
-    def notify_out_operand(self, ctx, op):
-        if op.type == o_imm:
-            ctx.out_value(op, OOFW_32)
-        elif op.type == o_near:
-            ctx.out_name_expr(op, op.addr)
-        elif op.type == o_phrase:
-            ctx.out_symbol("[")
-            ctx.out_name_expr(op, op.addr)
-            ctx.out_symbol("]")
-        elif op.type == o_displ:
-            ctx.out_symbol("[")
-            ctx.out_register(self.reg_names[op.reg])
-            ctx.out_symbol("]")
-        elif op.type == o_reg:
-            ctx.out_register(self.reg_names[op.reg])
-        else:
-            return False
-        return True
-            
-    def notify_out_insn(self, ctx):
-        ctx.out_line(self.get_instruction_name(ctx.insn.itype))
-        
-        feature = ctx.insn.get_canon_feature()
-        
-        ctx.out_spaces(5)
-        
-        if feature & CF_USE1:
-            ctx.out_one_operand(0)
-        
-        if feature & CF_USE2:
-            ctx.out_char(",")
-            ctx.out_char(" ")
-            ctx.out_one_operand(1)
+	def notify_out_operand(self, ctx, op):
+		if op.type == o_imm:
+			ctx.out_value(op, OOFW_32)
+		elif op.type == o_near:
+			ctx.out_name_expr(op, op.addr)
+		elif op.type == o_phrase:
+			ctx.out_symbol("[")
+			ctx.out_name_expr(op, op.addr)
+			ctx.out_symbol("]")
+		elif op.type == o_displ:
+			ctx.out_symbol("[")
+			ctx.out_register(self.reg_names[op.reg])
+			ctx.out_symbol("]")
+		elif op.type == o_reg:
+			ctx.out_register(self.reg_names[op.reg])
+		else:
+			return False
+		return True
+			
+	def notify_out_insn(self, ctx):
+		ctx.out_line(self.get_instruction_name(ctx.insn.itype))
+		
+		feature = ctx.insn.get_canon_feature()
+		
+		ctx.out_spaces(5)
+		
+		if feature & CF_USE1:
+			ctx.out_one_operand(0)
+		
+		if feature & CF_USE2:
+			ctx.out_char(",")
+			ctx.out_char(" ")
+			ctx.out_one_operand(1)
 
-        ctx.flush_outbuf()
-        return
-            
-    def notify_emu(self, cmd):
-        feature = cmd.get_canon_feature()
+		ctx.flush_outbuf()
+		return
+			
+	def notify_emu(self, cmd):
+		feature = cmd.get_canon_feature()
 
-        #Analyze instruction to make ref
-        if self.instruc[cmd.itype]['name'] in ('je', 'jne'):
-            if cmd[0].addr != 0 and cmd[0].type != o_reg:
-                add_cref(cmd.ea, cmd[0].addr, fl_JN)
-            flows = (feature & CF_STOP) == 0
-            if flows:
-                add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
-        elif self.instruc[cmd.itype]['name'] == 'call':
-            if cmd[0].addr != 0:
-                add_cref(cmd.ea, cmd[0].addr, fl_CN)
-            flows = (feature & CF_STOP) == 0
-            if flows:
-                add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
-        elif self.instruc[cmd.itype]['name'] == 'jmp':
-            if cmd[0].addr != 0 and cmd[0].type != o_reg:
-                add_cref(cmd.ea, cmd[0].addr, fl_JN)
-        else:
-            flows = (feature & CF_STOP) == 0
-            if flows:
-                add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
-                
-        return True
+		#Analyze instruction to make ref
+		if self.instruc[cmd.itype]['name'] in ('je', 'jne'):
+			if cmd[0].addr != 0 and cmd[0].type != o_reg:
+				add_cref(cmd.ea, cmd[0].addr, fl_JN)
+			flows = (feature & CF_STOP) == 0
+			if flows:
+				add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
+		elif self.instruc[cmd.itype]['name'] == 'call':
+			if cmd[0].addr != 0:
+				add_cref(cmd.ea, cmd[0].addr, fl_CN)
+			flows = (feature & CF_STOP) == 0
+			if flows:
+				add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
+		elif self.instruc[cmd.itype]['name'] == 'jmp':
+			if cmd[0].addr != 0 and cmd[0].type != o_reg:
+				add_cref(cmd.ea, cmd[0].addr, fl_JN)
+		else:
+			flows = (feature & CF_STOP) == 0
+			if flows:
+				add_cref(cmd.ea, cmd.ea + cmd.size, fl_F)
+				
+		return True
 
-    def notify_ana(self, cmd):
-        optype = get_wide_byte(cmd.ea)
-        
-        if optype == 2: #jump
-            cmd.itype = self.get_instruction_itype('jmp')
-            cmd.size = 6
-            self.get_value(cmd.ea, cmd[0])
-            if cmd[0].type == o_imm:
-                cmd[0].type = o_near
-        elif optype == 11: #je
-            cmd.itype = self.get_instruction_itype('je')
-            cmd.size = 6
-            self.get_value(cmd.ea, cmd[0])
-            if cmd[0].type == o_imm:
-                cmd[0].type = o_near
-        elif optype == 12: #Add register
-            cmd.itype = self.get_instruction_itype('add')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 15: #Exit
-            cmd.itype = self.get_instruction_itype('exit')
-            cmd.size = 6
-        elif optype == 17: #Sub
-            cmd.itype = self.get_instruction_itype('sub')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 22: #mov reg, value
-            cmd.itype = self.get_instruction_itype('mov')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 23: #not
-            cmd.itype = self.get_instruction_itype('not')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 24: #xor
-            cmd.itype = self.get_instruction_itype('xor')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 25: #shl
-            cmd.itype = self.get_instruction_itype('shl')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 26: #mod
-            cmd.itype = self.get_instruction_itype('mod')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 27: #and
-            cmd.itype = self.get_instruction_itype('and')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 31: #or
-            cmd.itype = self.get_instruction_itype('or')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 32: #call
-            cmd.itype = self.get_instruction_itype('call')
-            cmd.size = 6
-            self.get_value(cmd.ea, cmd[0])
-            if cmd[0].type == o_imm:
-                cmd[0].type = o_near
-        elif optype == 33: #ret
-            cmd.itype = self.get_instruction_itype('ret')
-            cmd.size = 6
-        elif optype == 34: #shr
-            cmd.itype = self.get_instruction_itype('shr')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 35: #cmp
-            cmd.itype = self.get_instruction_itype('cmp')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_value(cmd.ea, cmd[1])
-        elif optype == 37: #Get mem
-            cmd.itype = self.get_instruction_itype('mov')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            self.get_mem(cmd.ea, cmd[1])
-        elif optype == 38: #pop reg
-            cmd.itype = self.get_instruction_itype('pop')
-            cmd.size = 6
-            cmd[0].type = o_reg
-            cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-        elif optype == 42: #set mem
-            #This is going to be weird to implement
-            cmd.itype = self.get_instruction_itype('mov')
-            cmd.size = 6
-            self.get_mem(cmd.ea, cmd[0])
-            cmd[1].type = o_reg
-            cmd[1].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
-            #swap reg and value
-            cmd[0].reg, cmd[1].reg = cmd[1].reg, cmd[0].reg
-            cmd[0].value, cmd[1].value = cmd[1].value, cmd[0].value
-            cmd[0].addr, cmd[1].addr = cmd[1].addr, cmd[0].addr
+	def notify_ana(self, cmd):
+		optype = get_wide_byte(cmd.ea)
+		
+		if optype == 2: #jump
+			cmd.itype = self.get_instruction_itype('jmp')
+			cmd.size = 6
+			self.get_value(cmd.ea, cmd[0])
+			if cmd[0].type == o_imm:
+				cmd[0].type = o_near
+		elif optype == 11: #je
+			cmd.itype = self.get_instruction_itype('je')
+			cmd.size = 6
+			self.get_value(cmd.ea, cmd[0])
+			if cmd[0].type == o_imm:
+				cmd[0].type = o_near
+		elif optype == 12: #Add register
+			cmd.itype = self.get_instruction_itype('add')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 15: #Exit
+			cmd.itype = self.get_instruction_itype('exit')
+			cmd.size = 6
+		elif optype == 17: #Sub
+			cmd.itype = self.get_instruction_itype('sub')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 22: #mov reg, value
+			cmd.itype = self.get_instruction_itype('mov')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 23: #not
+			cmd.itype = self.get_instruction_itype('not')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 24: #xor
+			cmd.itype = self.get_instruction_itype('xor')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 25: #shl
+			cmd.itype = self.get_instruction_itype('shl')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 26: #mod
+			cmd.itype = self.get_instruction_itype('mod')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 27: #and
+			cmd.itype = self.get_instruction_itype('and')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 31: #or
+			cmd.itype = self.get_instruction_itype('or')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 32: #call
+			cmd.itype = self.get_instruction_itype('call')
+			cmd.size = 6
+			self.get_value(cmd.ea, cmd[0])
+			if cmd[0].type == o_imm:
+				cmd[0].type = o_near
+		elif optype == 33: #ret
+			cmd.itype = self.get_instruction_itype('ret')
+			cmd.size = 6
+		elif optype == 34: #shr
+			cmd.itype = self.get_instruction_itype('shr')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 35: #cmp
+			cmd.itype = self.get_instruction_itype('cmp')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_value(cmd.ea, cmd[1])
+		elif optype == 37: #Get mem
+			cmd.itype = self.get_instruction_itype('mov')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			self.get_mem(cmd.ea, cmd[1])
+		elif optype == 38: #pop reg
+			cmd.itype = self.get_instruction_itype('pop')
+			cmd.size = 6
+			cmd[0].type = o_reg
+			cmd[0].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+		elif optype == 42: #set mem
+			#This is going to be weird to implement
+			cmd.itype = self.get_instruction_itype('mov')
+			cmd.size = 6
+			self.get_mem(cmd.ea, cmd[0])
+			cmd[1].type = o_reg
+			cmd[1].reg = self.get_reg(get_wide_byte(cmd.ea + 1))
+			#swap reg and value
+			cmd[0].reg, cmd[1].reg = cmd[1].reg, cmd[0].reg
+			cmd[0].value, cmd[1].value = cmd[1].value, cmd[0].value
+			cmd[0].addr, cmd[1].addr = cmd[1].addr, cmd[0].addr
 
-        elif optype == 54: #push
-            cmd.itype = self.get_instruction_itype('push')
-            cmd.size = 6
-            self.get_value(cmd.ea, cmd[0])
-        elif optype == 57: #jne
-            cmd.itype = self.get_instruction_itype('jne')
-            cmd.size = 6
-            self.get_value(cmd.ea, cmd[0])
-            if cmd[0].type == o_imm:
-                cmd[0].type = o_near
-        else:
-            print("Unknown instruction %X" % optype)
-        return cmd.size
-    
+		elif optype == 54: #push
+			cmd.itype = self.get_instruction_itype('push')
+			cmd.size = 6
+			self.get_value(cmd.ea, cmd[0])
+		elif optype == 57: #jne
+			cmd.itype = self.get_instruction_itype('jne')
+			cmd.size = 6
+			self.get_value(cmd.ea, cmd[0])
+			if cmd[0].type == o_imm:
+				cmd[0].type = o_near
+		else:
+			print("Unknown instruction %X" % optype)
+		return cmd.size
+	
 def PROCESSOR_ENTRY():
-    return hvm_processor_t()
+	return hvm_processor_t()
 ```
-
-
+</div>
+</details>
+<br>
 
 But wait, it doesn’t disasamble the code correctly.
 
@@ -463,6 +466,9 @@ But wait, it doesn’t disasamble the code correctly.
 
 That’s because the vm code is still encrypted by TEA. I wrote a small script to decrypt the vm code.
 
+<details>
+<summary><b>Click here to expand decrypting script</b></summary>
+<div markdown="1">
 ```python
 from idaapi import *
 import base64
@@ -528,6 +534,9 @@ if __name__ == "__main__":
     patch_bytes(0, decoded_data)
     
 ```
+</div>
+</details>
+<br>
 
 The result is very satisfying.
 
@@ -539,6 +548,9 @@ IDA even give us a beautiful graph
 
 Almost done. There is still one thing: The obfuscation with `add` instruction as you can see in the image. I also wrote a small script to solve this little problem
 
+<details>
+<summary><b>Click here to expand helper script</b></summary>
+<div markdown="1">
 ```python
 from idc import *
 from idautils import *
@@ -584,6 +596,9 @@ def comment_add():
 if __name__ == "__main__":
     comment_add()
 ```
+</div>
+</details>
+<br>
 
 The script does the simple thing: Add the comment. The result is much more better
 
@@ -591,6 +606,9 @@ The script does the simple thing: Add the comment. The result is much more bette
 
 Now with the help of IDA, reverse engineering the vm become easier. Here is the rewritten of password checking algo (not exactly the same but at least it show how does the vm code run)
 
+<details>
+<summary><b>Click here to expand rewritten of password checking algo</b></summary>
+<div markdown="1">
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -661,6 +679,9 @@ int main()
 		printf("wrong");
 }
 ```
+</div>
+</details>
+<br>
 
 Sar did a good job. He implemented whole rc4 algo in vm code. Here is a few tips to know it’s rc4:
 - There is a loop to fill an array with value from 0 to 255
@@ -670,6 +691,9 @@ Sar did a good job. He implemented whole rc4 algo in vm code. Here is a few tips
 
 Now we know the vm algo. Here is the C++ code to brute force password
 
+<details>
+<summary><b>Click here to expand solution program</b></summary>
+<div markdown="1">
 ```cpp
 #include <stdio.h>
 #include <string.h>
@@ -858,6 +882,9 @@ int rc4_x86(const void* inbuf, void* outbuf, size_t buflen, const char* key, siz
 	return buflen;
 }
 ```
+</div>
+</details>  
+<br>
 
 To compile it, you need visual studio (I’m a guy using Windows. Don’t blame me). After about 10 minutes, the brute force code give me the correct password is `brb{Rc4_in_4_vM}`
 
