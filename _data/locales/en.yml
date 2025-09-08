@@ -29,11 +29,11 @@ panel:
 
 #  The liquid date format › http://strftime.net/
 date_format:
-  tooltip: '%a, %b %e, %Y, %l:%M %p %z'
+  tooltip: "%a, %b %e, %Y, %l:%M %p %z"
   post:
-    long: '%b %e, %Y'
-    short: '%b %e'
-    archive_month: '%b'
+    long: "%b %e, %Y"
+    short: "%b %e"
+    archive_month: "%b"
 
 copyright:
   # Shown at the bottom of the post
@@ -48,7 +48,7 @@ copyright:
     Except where otherwise noted, the blog posts on this site are licensed
     under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.
 
-meta: Powered by :PLATFORM with :THEME theme.
+meta: ""
 
 not_found:
   statment: Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.
@@ -59,7 +59,7 @@ not_found:
 # ----- Posts related labels -----
 
 post:
-  published: 'on'
+  published: "on"
   updated: Updated
   timeago:
     day: days ago
