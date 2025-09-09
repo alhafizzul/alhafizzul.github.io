@@ -1,8 +1,8 @@
 ---
-title: "[Linux Dojo] Module: Hello Hackers"
+title: "[Linux Luminarium] - Hello Hackers"
 date: 2025-09-09 17:00:00 +0700
-categories: [Linux, PwnCollege, Dojo]
-tags: [linux, pwn.college, notes, module]
+categories: [Linux, Pwn.College]
+tags: [linux, pwn.college, notes]
 ---
 
 # 🐧 Module: Hello Hackers
