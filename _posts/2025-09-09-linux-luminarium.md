@@ -1,11 +1,18 @@
 ---
-title: "[Linux Luminarium] - Hello Hackers"
+title: "[Linux Luminarium] - Notes"
 date: 2025-09-09 17:00:00 +0700
 categories: [Linux]
 tags: [linux, pwn.college, notes]
 ---
 
-Bismillah, kali ini saya mau coba pelajari dan catat materi dari pwn.college, dojo **Linux Luminarium** module **Hello Hackers**
+Bismillah,
+
+⚡ **Disclaimer:**  
+Sebelumnya saya sudah pernah menyelesaikan dan mendapatkan badge **Linux Luminarium** dari [pwn.college](https://pwn.college).  
+Namun waktu itu saya **tidak membuat catatan** sama sekali 😅.  
+Kali ini saya memutuskan untuk **mengulang dari awal** sambil mencatat semua hal yang saya pelajari, supaya bisa jadi dokumentasi pribadi.
+
+---
 
 # 🐧 Module: Hello Hackers
 
@@ -108,3 +115,34 @@ hacker@hello~command-history:~$ the flag is pwn.college{EAaCowH0UL2HehR98iJPGVmj
 
 ⚡ Note:  
 Di challenge lain, history ini bakal berisi command yang udah kita ketik sendiri. Jadi kalau mau jalanin command mirip, kita nggak perlu ketik ulang → cukup scroll pake tombol panah.
+
+---
+
+---
+
+---
+
+Lanjut lagi perjalanan kita di **Linux Luminarium**. Kali ini kita masuk ke module kedua yaitu _Pondering Paths_.  
+Di sini kita bakal belajar dasar-dasar tentang **file paths di Linux**.
+
+# 🐧 Module: Pondering Paths
+
+## 📌 Deskripsi Module
+
+Linux filesystem itu bentuknya kayak pohon 🌳.
+
+- Paling atas ada **root directory** → ditulis dengan `/`.
+- Di bawah root, ada banyak **directory** (folder) dan **file**.
+- Untuk nyari file/direktori, kita pakai yang namanya **path**.
+
+Ciri khas path di Linux:
+
+- Path yang dimulai dari `/` berarti mulai dari root.
+- Setiap “cabang” atau “folder” dipisahkan dengan `/`.
+
+Contoh:  
+`/home/hacker/file.txt` → artinya: dari root (`/`), masuk ke `home`, lalu `hacker`, lalu file `file.txt`.
+
+---
+
+### Challenges 1 : The Root 🫚
