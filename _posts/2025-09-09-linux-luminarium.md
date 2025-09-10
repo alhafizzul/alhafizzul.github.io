@@ -150,3 +150,14 @@ Contoh:
 ---
 
 ### Challenges 1 : The Root 🫚
+
+Konsep: **Absolute Path** → path yang dimulai dari root `/`.
+
+Jalankan program `pwn` yang ada di root:
+
+```bash
+hacker@paths~the-root:~$ /pwn
+BOOM!!!
+Here is your flag:
+pwn.college{kY9SZr5TpbOvYyMltSRxbi5gUBQ.QX4cTO0wiNxYDOyEzW}
+```
