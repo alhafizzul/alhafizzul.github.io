@@ -53,3 +53,54 @@ pwn.college{kLuAqWuYx-I8hWkv_Wo5FunqeUT.QX3YjM1wiNxYDOyEzW}
 ```
 
 Boom! kita berhasil mendapatkan Flag-nya.
+
+### Intro to Arguments
+
+### Challenge 2: Intro to Arguments 🦾
+
+Sekarang kita coba sesuatu yang sedikit lebih rumit: **command dengan arguments**.  
+Arguments adalah data tambahan yang kita kasih ke command. Saat kita ngetik perintah lalu tekan `Enter`, shell akan memecah input kita menjadi **command** dan **arguments**.
+
+- Kata pertama → command.
+- Kata-kata setelahnya → arguments.
+
+Contoh:
+
+```bash
+hacker@dojo:~$ echo Hello
+Hello
+hacker@dojo:~$
+```
+
+Pada contoh di atas command-nya adalah echo, dan argument-nya adalah Hello.
+Command echo itu simpel → dia cuma mengulang (print) argument yang kita kasih ke terminal.
+
+Untuk challenge ini, agar mendapatkan flag kita perlu menjalankan `hello` sebagai command dan `hackers` sebagai argument.
+
+```bash
+hacker@hello~intro-to-arguments:~$ hello hackers
+Success! Here is your flag:
+pwn.college{QmRWs0ue6W-EqxbFJNR6KnaMGGb.QX4YjM1wiNxYDOyEzW}
+hacker@hello~intro-to-arguments:~$
+```
+
+Kita berhasil mendapatkan flag-nya.
+
+### Challenge 3 : Command History 🎩
+
+Kalau kita belajar Linux, kita bakal sering banget ngetik command. Kadang capek juga kalau harus ngetik ulang dari nol terus. Untungnya, shell punya fitur **command history** yang nyimpen semua command yang pernah kita jalanin.
+
+Cara pakainya gampang:
+
+- Tekan **panah atas (↑)** → buat lihat command sebelumnya.
+- Tekan **panah bawah (↓)** → buat maju lagi ke command yang lebih baru.
+
+Di challenge ini, flag akan **disuntikkan langsung ke dalam history** kita.  
+Jadi tinggal buka terminal, tekan tombol panah atas, dan ambil flag yang udah ada di sana.
+
+```bash
+hacker@hello~command-history:~$ the flag is pwn.college{EAaCowH0UL2HehR98iJPGVmj1B3.0lNzEzNxwiNxYDOyEzW}
+```
+
+⚡ Note:  
+Di challenge lain, history ini bakal berisi command yang udah kita ketik sendiri. Jadi kalau mau jalanin command mirip, kita nggak perlu ketik ulang → cukup scroll pake tombol panah.
