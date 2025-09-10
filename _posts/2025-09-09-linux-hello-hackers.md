@@ -1,7 +1,7 @@
 ---
 title: "[Linux Luminarium] - Hello Hackers"
 date: 2025-09-09 17:00:00 +0700
-categories: [Linux, Pwn.College]
+categories: [Linux]
 tags: [linux, pwn.college, notes]
 ---
 
