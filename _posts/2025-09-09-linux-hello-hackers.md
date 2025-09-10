@@ -56,6 +56,8 @@ pwn.college{kLuAqWuYx-I8hWkv_Wo5FunqeUT.QX3YjM1wiNxYDOyEzW}
 
 Boom! kita berhasil mendapatkan Flag-nya.
 
+---
+
 ### Challenge 2 : Intro to Arguments 🦾
 
 Sekarang kita coba sesuatu yang sedikit lebih rumit: **command dengan arguments**.  
@@ -85,6 +87,8 @@ hacker@hello~intro-to-arguments:~$
 ```
 
 Kita berhasil mendapatkan flag-nya.
+
+---
 
 ### Challenge 3 : Command History 🎩
 
