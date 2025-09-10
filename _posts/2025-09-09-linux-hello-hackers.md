@@ -54,9 +54,7 @@ pwn.college{kLuAqWuYx-I8hWkv_Wo5FunqeUT.QX3YjM1wiNxYDOyEzW}
 
 Boom! kita berhasil mendapatkan Flag-nya.
 
-### Intro to Arguments
-
-### Challenge 2: Intro to Arguments 🦾
+### Challenge 2 : Intro to Arguments 🦾
 
 Sekarang kita coba sesuatu yang sedikit lebih rumit: **command dengan arguments**.  
 Arguments adalah data tambahan yang kita kasih ke command. Saat kita ngetik perintah lalu tekan `Enter`, shell akan memecah input kita menjadi **command** dan **arguments**.
