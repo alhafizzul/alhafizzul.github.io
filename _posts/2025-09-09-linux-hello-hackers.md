@@ -31,6 +31,8 @@ Prompt ini punya arti:
 Sederhananya, prompt ini kayak "alamat" + "status" kita sebelum jalanin command.
 Setelah itu, terminal tinggal nunggu kita masukin perintah.
 
+---
+
 ### Challenge 1 : Intro to Commands 🧟
 
 Pada challenge ini kita diminta untuk menjalankan command pertama kita,
