@@ -16,7 +16,7 @@ Kali ini saya memutuskan untuk **mengulang dari awal** sambil mencatat semua hal
 
 # 🐧 Module: Hello Hackers
 
-## 📌 Deskripsi Module
+## 📌 Deskripsi Module 1
 
 Module ini adalah awal dari **Linux Luminarium** di [pwn.college](https://pwn.college).  
 Tujuannya: mengenalkan **command line interface (CLI)**, apa itu **prompt**, dan gimana cara menjalankan command dasar.
@@ -120,14 +120,12 @@ Di challenge lain, history ini bakal berisi command yang udah kita ketik sendiri
 
 ---
 
----
-
 Lanjut lagi perjalanan kita di **Linux Luminarium**. Kali ini kita masuk ke module kedua yaitu _Pondering Paths_.  
 Di sini kita bakal belajar dasar-dasar tentang **file paths di Linux**.
 
 # 🐧 Module: Pondering Paths
 
-## 📌 Deskripsi Module
+## 📌 Deskripsi Module 2
 
 Linux filesystem itu bentuknya kayak pohon 🌳.
 
