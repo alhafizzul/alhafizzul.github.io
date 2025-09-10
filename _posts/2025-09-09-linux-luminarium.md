@@ -153,7 +153,9 @@ Contoh:
 
 Konsep: **Absolute Path** → path yang dimulai dari root `/`.
 
-Jalankan program `pwn` yang ada di root:
+Di Linux, semua filesystem itu start dari `/` alias **root directory**.  
+Nah, di challenge ini ada sebuah program baru di root dengan nama `pwn`.  
+Tugas kita simpel → jalanin aja program itu pakai **absolute path** (path lengkap dari root).
 
 ```bash
 hacker@paths~the-root:~$ /pwn
