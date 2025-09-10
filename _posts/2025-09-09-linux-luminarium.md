@@ -120,6 +120,14 @@ Di challenge lain, history ini bakal berisi command yang udah kita ketik sendiri
 
 ---
 
+##
+
+##
+
+---
+
+---
+
 Lanjut lagi perjalanan kita di **Linux Luminarium**. Kali ini kita masuk ke module kedua yaitu _Pondering Paths_.  
 Di sini kita bakal belajar dasar-dasar tentang **file paths di Linux**.
 
