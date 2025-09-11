@@ -163,3 +163,21 @@ BOOM!!!
 Here is your flag:
 pwn.college{kY9SZr5TpbOvYyMltSRxbi5gUBQ.QX4cTO0wiNxYDOyEzW}
 ```
+
+---
+
+### Challenge 2 : Program and Absolute Paths 🛣️
+
+Kalau tadi kita jalanin program langsung dari root (`/pwn`), sekarang kita coba yang sedikit lebih panjang.  
+Di dalam root (`/`) ada folder khusus buat challenge, namanya **`/challenge`**.  
+Nah, di dalam folder itu ada program `run` yang harus kita eksekusi.
+
+Karena kita diminta pakai **absolute path**, tinggal tulis aja path lengkapnya:
+
+```bash
+hacker@paths~program-and-absolute-paths:~$ /challenge/run
+Correct!!!
+/challenge/run is an absolute path! Here is your flag:
+pwn.college{kyZRS7sOT8pVnMtvpmBlIAehzNt.QX1QTN0wiNxYDOyEzW}
+hacker@paths~program-and-absolute-paths:~$
+```
