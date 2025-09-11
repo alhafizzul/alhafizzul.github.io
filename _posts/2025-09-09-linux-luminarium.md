@@ -181,3 +181,64 @@ Correct!!!
 pwn.college{kyZRS7sOT8pVnMtvpmBlIAehzNt.QX1QTN0wiNxYDOyEzW}
 hacker@paths~program-and-absolute-paths:~$
 ```
+
+---
+
+### Challenge 3 : Position Thy Self 🧭
+
+📌 **Ilmu penting:**
+
+- `cd` = change directory → buat pindah ke direktori tertentu.
+- Prompt akan berubah sesuai direktori aktif.
+- `~` di prompt artinya home directory user.
+
+🛠️ **Contoh penggunaan:**
+
+```bash
+cd /some/path       # pindah ke direktori /some/path
+cd ~                # balik ke home directory
+cd ..               # naik 1 level ke parent directory
+```
+
+---
+
+### Challenge 4 : Position Elsewhere 🌍
+
+📌 **Ilmu penting:**
+
+- Di Linux kita bisa **pindah direktori** pakai `cd` (**change directory**).
+- Path yang kita kasih ke `cd` menentukan kita lagi “berdiri” di mana.
+- Direktori aktif sekarang disebut **current working directory**.
+- Prompt bakal ikut berubah sesuai lokasi kita.
+- Tanda `~` di prompt itu shortcut buat **home directory**.
+
+🛠️ **Command utama:**
+
+```bash
+cd /some/new/directory   # pindah ke direktori tertentu
+pwd                      # cek lokasi sekarang
+/challenge/run           # jalankan program setelah pindah
+```
+
+---
+
+### Challenge 5 : Position Yet Elsewhere 🗂️
+
+**Ilmu Penting**
+
+- Kita bisa **pindah directory** di Linux pakai command `cd <path>`.
+- `cd` akan mengubah **current working directory** dari shell kita.
+- Di prompt, simbol `~` menunjukkan bahwa kita sedang ada di **home directory**.
+- Kalau sudah pindah directory, kita bisa jalankan program dari lokasi baru sesuai instruksi challenge.
+
+**Contoh Command**
+
+```bash
+# pindah ke direktori tertentu
+cd /some/new/directory
+
+# cek lokasi kita sekarang di prompt
+hacker@dojo:/some/new/directory$
+```
+
+Jadi intinya di challenge ini, kita diminta untuk `cd` ke path tertentu dulu, baru jalankan program `/challenge/run` dari sana.
