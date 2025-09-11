@@ -274,7 +274,7 @@ challenge/run
 
 Intinya di challenge ini, kita belajar kalau relative path tergantung lokasi kita sekarang (`cwd`). Karena `cwd` kita `/`, maka cukup akses `challenge/run` tanpa `/` di depannya.
 
-### 🔹 Challenge 7 : Explicit Relative Paths, From / 📂
+### Challenge 7 : Explicit Relative Paths, From / 📂
 
 **Ilmu Penting**
 
