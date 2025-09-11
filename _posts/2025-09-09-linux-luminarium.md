@@ -242,3 +242,34 @@ hacker@dojo:/some/new/directory$
 ```
 
 Jadi intinya di challenge ini, kita diminta untuk `cd` ke path tertentu dulu, baru jalankan program `/challenge/run` dari sana.
+
+---
+
+### Challenge 6 : Implicit Relative Paths, From `/` 🛤️
+
+**Ilmu Penting**
+
+- Selain **absolute path** (dimulai `/`), ada juga **relative path**.
+- **Relative path** → path yang **tidak dimulai dengan `/`** dan ditafsirkan relatif terhadap **current working directory (cwd)** kita.
+- Simbol penting:
+  - `.` = direktori saat ini
+  - `..` = direktori induk (parent directory)
+
+**Contoh**  
+Misal file ada di `/tmp/a/b/my_file`:
+
+- Kalau cwd = `/` → akses dengan `tmp/a/b/my_file`
+- Kalau cwd = `/tmp` → akses dengan `a/b/my_file`
+- Kalau cwd = `/tmp/a/b/c` → akses dengan `../my_file`
+
+**Command Utama**
+
+```bash
+# pindah ke root
+cd /
+
+# jalankan program pakai relative path
+challenge/run
+```
+
+Intinya di challenge ini, kita belajar kalau relative path tergantung lokasi kita sekarang (`cwd`). Karena `cwd` kita `/`, maka cukup akses `challenge/run` tanpa `/` di depannya.
