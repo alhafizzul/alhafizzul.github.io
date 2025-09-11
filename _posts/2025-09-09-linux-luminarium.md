@@ -273,3 +273,38 @@ challenge/run
 ```
 
 Intinya di challenge ini, kita belajar kalau relative path tergantung lokasi kita sekarang (`cwd`). Karena `cwd` kita `/`, maka cukup akses `challenge/run` tanpa `/` di depannya.
+
+### 🔹 Challenge 7 : Explicit Relative Paths, From / 📂
+
+**Ilmu Penting**
+
+- Di Linux, setiap direktori punya dua entry spesial:
+  - `.` → menunjuk direktori saat ini.
+  - `..` → menunjuk direktori induk (parent directory).
+- Artinya, kita bisa menulis path dengan cara eksplisit pakai `.` walaupun hasilnya sama aja.
+
+**Contoh Absolute Path (semua sama):**
+
+- `/challenge`
+- `/challenge/.`
+- `/challenge/./././`
+- `/././challenge/././`
+
+**Contoh Relative Path (semua sama, kalau cwd = `/`):**
+
+- `challenge`
+- `./challenge`
+- `./././challenge`
+- `challenge/.`
+
+**Command Utama**
+
+```bash
+# posisi di root
+cd /
+
+# jalankan program pakai path eksplisit dengan .
+./challenge/run
+```
+
+Jadi di challenge ini kita belajar pakai `.` (current directory) dalam path. Walaupun keliatan ribet, hasilnya sama dengan akses biasa.
