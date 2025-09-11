@@ -308,3 +308,81 @@ cd /
 ```
 
 Jadi di challenge ini kita belajar pakai `.` (current directory) dalam path. Walaupun keliatan ribet, hasilnya sama dengan akses biasa.
+
+---
+
+### Challenge 8 : Implicit Relative Path ⚙️
+
+**Ilmu Penting**
+
+- Kalau kita ada di dalam direktori `/challenge`, lalu coba jalanin program `run` langsung:
+
+```bash
+cd /challenge
+run
+```
+
+Hasilnya bakal error:
+
+```bash
+bash: run: command not found
+```
+
+- Ini karena Linux tidak otomatis mencari program di current directory untuk alasan keamanan.
+- Kalau otomatis, kita bisa tanpa sengaja ngejalanin program berbahaya yang kebetulan punya nama sama dengan command sistem.
+- Solusinya: kasih tahu Linux secara eksplisit kalau program ada di direktori sekarang dengan ./.
+
+```bash
+cd /challenge
+./run
+```
+
+Dari challenge ini kita belajar: untuk menjalankan program yang ada di direktori saat ini, gunakan `./nama_program.`
+
+---
+
+### Challenge 9 : Home Sweet Home 🏡
+
+**Ilmu Penting**
+
+- Setiap user di Linux punya **home directory**, biasanya ada di `/home/nama_user`.
+- Di dojo ini, user kita adalah `hacker`, jadi home-nya = `/home/hacker`.
+- Tanda `~` adalah **shorthand** buat home directory. Jadi:
+
+  - `cd ~` = `cd /home/hacker`
+  - `cd ~/asdf` = `cd /home/hacker/asdf`
+
+- Catatan penting:
+  - `~` cuma diexpand di bagian depan.
+  - Misal `~` → `/home/hacker`, tapi `~/~` → `/home/hacker/~` (bukan nested).
+- `cd` tanpa argumen otomatis balik ke home.
+
+**Command Dasar**
+
+```bash
+cd ~          # pindah ke home
+echo ~        # ngecek ekspansi path
+cd ~/folder   # ke subfolder di home
+cd            # langsung balik ke home
+```
+
+**Challenge Rules**
+
+- Program `/challenge/run` akan nulis flag ke file sesuai argumen path yang kita kasih.
+
+- **Constraint:**
+  - Argumen harus absolute path.
+  - Harus berada di dalam `/home/hacker`.
+  - Sebelum diexpand, argumen harus ≤ 3 karakter.
+
+**Contoh Pemakaian**
+
+```bash
+/challenge/run ~a
+```
+
+Misalnya `~a` diexpand jadi `/home/hacker/a` → valid ✅
+
+Dari sini kita belajar: `~` itu trik praktis buat refer ke home, sekaligus bisa dipakai buat bypass batasan panjang argumen.
+
+---
