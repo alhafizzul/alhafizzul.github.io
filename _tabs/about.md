@@ -12,9 +12,6 @@ order: 4
 > [Buy me a coffee](https://sociabuzz.com/zhurrahman)
 > {: .prompt-success }
 
-> 💬 Want to send me an anonymous message?  
-> [Send anonymously via Tellonym](https://tellonym.me/zhurrahman)
-> {: .prompt-info }
 
 [comment]: > This blog is where I share what I learn and explore in my cybersecurity journey.
 [comment]: {: .prompt-tip }
